@@ -1,7 +1,7 @@
 {
   "name": "tspsolver",
   "version": "0.0.2",
-  "description": "The best module ever.",
+  "description": "Node adaptation of google-maps-tsp-solver (https://code.google.com/p/google-maps-tsp-solver/)",
   "homepage": "https://github.com/deftx/tspsolver",
   "bugs": "https://github.com/deftx/tspsolver/issues",
   "author": {
