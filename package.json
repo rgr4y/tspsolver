@@ -1,0 +1,29 @@
+{
+  "name": "tspsolver",
+  "version": "0.0.2",
+  "description": "The best module ever.",
+  "homepage": "https://github.com/deftx/tspsolver",
+  "bugs": "https://github.com/deftx/tspsolver/issues",
+  "author": {
+    "name": "Rob Vella",
+    "email": "me@robvella.com",
+    "url": "http://robvella.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deftx/tspsolver"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "dependencies": {
+    "googlemaps": "0.1.8"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.5.0"
+  }
+}
