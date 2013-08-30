@@ -1,26 +1,59 @@
-# tspsolver [![Build Status](https://secure.travis-ci.org/deftx/tspsolver.png?branch=master)](http://travis-ci.org/deftx/tspsolver)
+tspsolver
+=========
 
-The best module ever.
+Server-side node module adaptation of google-maps-tsp-solver (https://code.google.com/p/google-maps-tsp-solver/). Uses googlemaps node module.
 
-## Getting Started
-Install the module with: `npm install tspsolver`
+More information on how the original was implemented:
 
-```javascript
-var tspsolver = require('tspsolver');
-tspsolver.awesome(); // "awesome"
-```
+https://code.google.com/p/google-maps-tsp-solver/
 
-## Documentation
-_(Coming soon)_
+## Example 1 - Round Trip using Express framework
 
-## Examples
-_(Coming soon)_
+<pre><code>
+var express = require('express');
+var app = express();
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+app.get('/', function(req, res) {
+    res.send(&quot;Use /route-optimizer&quot;)
+})
 
-## Release History
-_(Nothing yet)_
+app.all('/route-optimizer', function(req, res) {
+    var tsp = require('tspsolver');
 
-## License
-Copyright (c) 2013 Rob Vella. Licensed under the MIT license.
+    if (req.method == &quot;POST&quot;) {
+        var addresses = req.body.address;
+    } else if (typeof req.query.address !== &quot;undefined&quot;) {
+        var addresses = req.query.address;
+    } else {
+        res.send(&quot;No addresses specified!&quot;);
+    }
+
+    if (typeof addresses == &quot;string&quot;) {
+        var addressSingle = addresses;
+        addresses = new Array();
+        addresses.push(addressSingle);
+    }
+
+    for (var i=0;i&lt;addresses.length;i++) {
+        console.log(&quot;Adding address '&quot;+addresses[i]+&quot;'&quot;);
+        tsp.addAddress(addresses[i]);
+    }
+
+    tsp.solveRoundTrip(function() {
+        var embed_uri = tsp.createGoogleLink(true);
+        var map_uri   = tsp.createGoogleLink();
+
+        var send = {
+            'addresses': addresses,
+            'embed_uri': embed_uri,
+            'map_uri' :  map_uri
+        };
+
+        console.log(send);
+        res.send(send);
+    })
+})
+
+app.listen(3000);
+
+</code></pre>
